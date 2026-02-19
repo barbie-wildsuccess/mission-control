@@ -1,0 +1,50 @@
+{
+  "$schema": "./agents.schema.json",
+  "agents": [
+    {
+      "id": "agent-01",
+      "name": "Forge",
+      "role": "Code Builder",
+      "emoji": "🔨",
+      "color": "#f97316",
+      "description": "Writes and ships code"
+    },
+    {
+      "id": "agent-02", 
+      "name": "Scout",
+      "role": "Research & Discovery",
+      "emoji": "🔍",
+      "color": "#3b82f6",
+      "description": "Finds opportunities and intel"
+    },
+    {
+      "id": "agent-03",
+      "name": "Ghost",
+      "role": "Outreach & Growth",
+      "emoji": "👻",
+      "color": "#8b5cf6",
+      "description": "Handles outreach and marketing"
+    },
+    {
+      "id": "agent-04",
+      "name": "Closer",
+      "role": "Sales & Deals",
+      "emoji": "🤝",
+      "color": "#22c55e",
+      "description": "Closes deals and follows up"
+    },
+    {
+      "id": "agent-05",
+      "name": "Hype",
+      "role": "Social & Content",
+      "emoji": "📣",
+      "color": "#ec4899",
+      "description": "Creates content and hype"
+    }
+  ],
+  "settings": {
+    "maxAgents": 10,
+    "heartbeatIntervalMs": 30000,
+    "statusOptions": ["active", "idle", "sleeping", "error"]
+  }
+}

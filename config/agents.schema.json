@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "agents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "role"],
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "role": { "type": "string" },
+          "emoji": { "type": "string" },
+          "color": { "type": "string" },
+          "description": { "type": "string" }
+        }
+      }
+    },
+    "settings": {
+      "type": "object",
+      "properties": {
+        "maxAgents": { "type": "number" },
+        "heartbeatIntervalMs": { "type": "number" },
+        "statusOptions": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

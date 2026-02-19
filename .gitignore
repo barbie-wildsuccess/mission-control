@@ -1,0 +1,55 @@
+# Mission Control - Git Ignore
+# ===========================
+
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Build outputs
+.next/
+out/
+build/
+dist/
+*.tsbuildinfo
+
+# Environment files (NEVER COMMIT THESE!)
+.env
+.env.local
+.env.production
+.env.development
+.env*.local
+
+# Deployment
+.vercel
+.netlify
+.railway
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Testing
+coverage/
+.nyc_output/
+
+# Misc
+*.log
+.cache/
+*.pid
+*.seed
+*.pid.lock
+
+# OS files
+Thumbs.db
