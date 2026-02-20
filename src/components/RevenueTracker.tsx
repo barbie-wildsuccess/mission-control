@@ -43,13 +43,13 @@ export function RevenueTracker() {
     return (
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="font-mono text-sm text-emerald-500 tracking-widest uppercase">
+          <h2 className="text-sm font-semibold text-pink-500 tracking-widest uppercase">
             Revenue Tracker
           </h2>
-          <div className="text-xs text-[#525252] font-mono">LOADING...</div>
+          <div className="text-xs text-gray-400">LOADING...</div>
         </div>
-        <div className="h-64 bg-[#0c0c0c] border border-[#1e1e1e] rounded flex items-center justify-center">
-          <div className="text-[#525252] font-mono">Loading revenue data...</div>
+        <div className="h-64 glass-card flex items-center justify-center">
+          <div className="text-gray-400">Loading revenue data...</div>
         </div>
       </div>
     );
@@ -61,25 +61,25 @@ export function RevenueTracker() {
     <div className="space-y-4">
       {/* Header with total */}
       <div className="flex items-center justify-between">
-        <h2 className="font-mono text-sm text-emerald-500 tracking-widest uppercase">
+        <h2 className="text-sm font-semibold text-pink-500 tracking-widest uppercase">
           Revenue Tracker
         </h2>
         <div className="text-right">
-          <div className="text-xs text-[#525252] font-mono">TOTAL REVENUE</div>
-          <div className="font-mono text-lg text-white">{formatCurrency(total || 0)}</div>
+          <div className="text-xs text-gray-400">TOTAL REVENUE</div>
+          <div className="text-lg text-gray-900">{formatCurrency(total || 0)}</div>
         </div>
       </div>
 
       {/* Period selector */}
-      <div className="flex gap-1 p-1 bg-[#0c0c0c] border border-[#1e1e1e] rounded inline-flex">
+      <div className="flex gap-1 p-1 bg-gray-100/60 rounded-full inline-flex">
         {(["daily", "weekly", "monthly"] as Period[]).map((period) => (
           <button
             key={period}
             onClick={() => setSelectedPeriod(period)}
-            className={`px-3 py-1 font-mono text-xs uppercase tracking-wider rounded transition-colors ${ 
+            className={`px-3 py-1 text-xs uppercase tracking-wider rounded-full transition-all ${ 
               selectedPeriod === period
-                ? "bg-emerald-500/20 text-emerald-500 border border-emerald-500/30"
-                : "text-[#737373] hover:text-white hover:bg-[#1e1e1e]"
+                ? "bg-pink-500 text-white shadow-sm"
+                : "text-gray-500 hover:text-gray-900"
             }`}
           >
             {period}
@@ -89,25 +89,25 @@ export function RevenueTracker() {
 
       <div className="grid grid-cols-2 gap-4">
         {/* Revenue Chart */}
-        <div className="bg-[#0c0c0c] border border-[#1e1e1e] rounded p-4">
-          <h3 className="font-mono text-xs text-[#525252] uppercase tracking-wider mb-4">
+        <div className="bg-white/60 border border-black/5 rounded-xl p-4">
+          <h3 className="text-xs text-gray-400 uppercase tracking-wider mb-4">
             {selectedPeriod} Revenue
           </h3>
           <div className="space-y-3">
             {summaryData?.slice(0, 7).map((item, index) => (
               <div key={item.period} className="flex items-center gap-3">
-                <div className="w-16 text-xs text-[#525252] font-mono">
+                <div className="w-16 text-xs text-gray-400 font-mono">
                   {formatPeriodLabel(item.period, selectedPeriod).slice(0, 8)}
                 </div>
-                <div className="flex-1 h-4 bg-[#1e1e1e] rounded overflow-hidden">
+                <div className="flex-1 h-4 bg-gray-100 rounded overflow-hidden">
                   <div
-                    className="h-full bg-gradient-to-r from-emerald-500 to-emerald-400"
+                    className="h-full bg-gradient-to-r from-pink-500 to-rose-400"
                     style={{
                       width: `${(item.amount / maxAmount) * 100}%`,
                     }}
                   />
                 </div>
-                <div className="w-16 text-xs text-white font-mono text-right">
+                <div className="w-16 text-xs text-gray-900 font-mono text-right">
                   {formatCurrency(item.amount)}
                 </div>
               </div>
@@ -116,17 +116,17 @@ export function RevenueTracker() {
         </div>
 
         {/* Product breakdown */}
-        <div className="bg-[#0c0c0c] border border-[#1e1e1e] rounded p-4">
-          <h3 className="font-mono text-xs text-[#525252] uppercase tracking-wider mb-4">
+        <div className="bg-white/60 border border-black/5 rounded-xl p-4">
+          <h3 className="text-xs text-gray-400 uppercase tracking-wider mb-4">
             By Product
           </h3>
           <div className="space-y-3">
             {byProduct?.map((item, index) => (
               <div key={item.product} className="flex items-center gap-3">
-                <div className="flex-1 text-xs text-[#737373] font-mono">
+                <div className="flex-1 text-xs text-gray-500 font-mono">
                   {item.product}
                 </div>
-                <div className="text-xs text-white font-mono">
+                <div className="text-xs text-gray-900 font-mono">
                   {formatCurrency(item.amount)}
                 </div>
               </div>
@@ -136,17 +136,17 @@ export function RevenueTracker() {
       </div>
 
       {/* Stripe integration note */}
-      <div className="bg-amber-500/10 border border-amber-500/20 rounded p-3">
+      <div className="bg-amber-50 border border-amber-200 rounded-xl p-3">
         <div className="flex items-center gap-2 mb-2">
           <div className="w-2 h-2 rounded-full bg-amber-500" />
-          <span className="font-mono text-xs text-amber-500 uppercase tracking-wider">
+          <span className="text-xs text-amber-600 uppercase tracking-wider">
             Integration Ready
           </span>
         </div>
-        <p className="text-xs text-[#737373] leading-relaxed">
+        <p className="text-xs text-gray-500 leading-relaxed">
           Add your Stripe API key to sync real revenue data automatically.
           <br />
-          <span className="text-amber-500 font-mono">ENV: STRIPE_SECRET_KEY</span>
+          <span className="text-amber-600 font-mono">ENV: STRIPE_SECRET_KEY</span>
         </p>
       </div>
     </div>

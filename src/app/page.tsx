@@ -29,10 +29,10 @@ function TabButton({
   return (
     <button
       onClick={onClick}
-      className={`px-4 py-2 font-mono text-xs uppercase tracking-wider rounded transition-colors ${
+      className={`px-4 py-2 text-xs font-medium uppercase tracking-wider rounded-full transition-all ${
         isActive
-          ? "bg-emerald-500/20 text-emerald-500 border border-emerald-500/30"
-          : "text-[#737373] hover:text-white hover:bg-[#1e1e1e] border border-transparent"
+          ? "bg-pink-500 text-white shadow-sm"
+          : "text-gray-500 hover:text-gray-900 hover:bg-white/60"
       }`}
     >
       {label}
@@ -55,9 +55,9 @@ export default function Dashboard() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <div className="text-emerald-500 font-mono text-lg mb-2">INITIALIZING...</div>
-          <div className="w-48 h-1 bg-[#1e1e1e] rounded overflow-hidden">
-            <div className="h-full bg-emerald-500 rounded animate-pulse" style={{ width: "60%" }} />
+          <div className="text-pink-500 text-lg mb-2 font-medium">Loading...</div>
+          <div className="w-48 h-1 bg-pink-100 rounded overflow-hidden">
+            <div className="h-full bg-pink-500 rounded animate-pulse" style={{ width: "60%" }} />
           </div>
         </div>
       </div>
@@ -105,21 +105,21 @@ export default function Dashboard() {
               </div>
             </div>
 
-            {/* Mission Control+ Features */}
+            {/* The Penthouse Features */}
             <div className="px-4 pb-6 pt-1 space-y-4">
               <div className="flex items-center justify-between">
-                <h2 className="font-mono text-sm text-emerald-500 tracking-widest uppercase">
-                  Mission Control+
+                <h2 className="text-sm font-semibold text-pink-500 tracking-widest uppercase">
+                  The Penthouse
                 </h2>
-                <span className="font-mono text-xs text-[#525252]">REVENUE + QUEUE + TASK CREATION</span>
+                <span className="text-xs text-gray-400">REVENUE + BUILDS + CREATE</span>
               </div>
 
-              <div className="bg-[#0c0c0c] border border-[#1e1e1e] rounded-lg p-4">
+              <div className="glass-card p-4">
                 <RevenueTrackerV2 />
               </div>
 
               <div className="grid grid-cols-1 xl:grid-cols-3 gap-4">
-                <div className="xl:col-span-2 bg-[#0c0c0c] border border-[#1e1e1e] rounded-lg p-4">
+                <div className="xl:col-span-2 glass-card p-4">
                   <BuildQueue />
                 </div>
                 <div className="xl:col-span-1">
@@ -137,9 +137,9 @@ export default function Dashboard() {
       <Header agentCount={agents.length} activeCount={agents.filter(a => a.status === "active").length} />
       
       {/* Tab Navigation */}
-      <div className="px-4 py-2 border-b border-[#1e1e1e]">
+      <div className="px-4 py-2 border-b border-black/5 bg-white/40 backdrop-blur-sm">
         <div className="flex justify-between items-center">
-          <div className="flex gap-2">
+          <div className="flex gap-1 bg-gray-100/60 p-1 rounded-full">
             <TabButton 
               label="Dashboard" 
               isActive={activeTab === "dashboard"}
@@ -158,7 +158,7 @@ export default function Dashboard() {
           </div>
           <a
             href="/settings"
-            className="px-3 py-1 font-mono text-xs text-[#737373] hover:text-emerald-500 hover:bg-[#1e1e1e] rounded transition-colors uppercase tracking-wider"
+            className="px-3 py-1 text-xs text-gray-500 hover:text-pink-500 hover:bg-white/60 rounded-full transition-colors uppercase tracking-wider"
           >
             ⚙️ Settings
           </a>

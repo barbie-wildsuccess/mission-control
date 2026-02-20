@@ -14,19 +14,19 @@ function formatDate(value: string): string {
 export default async function OpsPage() {
   if (!hasSupabaseServiceEnv()) {
     return (
-      <main className="min-h-screen p-8 text-[#e5e5e5]">
-        <div className="mx-auto max-w-4xl space-y-4 rounded-lg border border-[#2a2a2a] bg-[#111111] p-6">
+      <main className="min-h-screen p-8 text-gray-900">
+        <div className="mx-auto max-w-4xl space-y-4 rounded-lg border border-black/5 bg-white/70 backdrop-blur-xl p-6">
           <h1 className="text-xl font-semibold">Ops Kernel</h1>
-          <p className="text-sm text-[#9ca3af]">
+          <p className="text-sm text-gray-500">
             Supabase service role env vars are missing. Add these server-only
             variables before using the Ops kernel UI or heartbeat route.
           </p>
-          <ul className="list-disc pl-6 text-sm text-[#d1d5db]">
+          <ul className="list-disc pl-6 text-sm text-gray-600">
             {listMissingSupabaseServiceEnv().map((key) => (
               <li key={key}>{key}</li>
             ))}
           </ul>
-          <p className="text-xs text-[#6b7280]">
+          <p className="text-xs text-gray-400">
             Do not prefix these env vars with NEXT_PUBLIC.
           </p>
         </div>
@@ -46,10 +46,10 @@ export default async function OpsPage() {
 
   if (loadError) {
     return (
-      <main className="min-h-screen p-8 text-[#e5e5e5]">
-        <div className="mx-auto max-w-4xl rounded-lg border border-[#7f1d1d] bg-[#111111] p-6">
+      <main className="min-h-screen p-8 text-gray-900">
+        <div className="mx-auto max-w-4xl rounded-lg border border-red-200 bg-white/70 backdrop-blur-xl p-6">
           <h1 className="text-xl font-semibold">Ops Kernel</h1>
-          <p className="mt-2 text-sm text-[#fca5a5]">
+          <p className="mt-2 text-sm text-red-500">
             Failed to load ops data: {loadError}
           </p>
         </div>
@@ -59,10 +59,10 @@ export default async function OpsPage() {
 
   if (!dashboardData) {
     return (
-      <main className="min-h-screen p-8 text-[#e5e5e5]">
-        <div className="mx-auto max-w-4xl rounded-lg border border-[#7f1d1d] bg-[#111111] p-6">
+      <main className="min-h-screen p-8 text-gray-900">
+        <div className="mx-auto max-w-4xl rounded-lg border border-red-200 bg-white/70 backdrop-blur-xl p-6">
           <h1 className="text-xl font-semibold">Ops Kernel</h1>
-          <p className="mt-2 text-sm text-[#fca5a5]">
+          <p className="mt-2 text-sm text-red-500">
             Failed to load ops data: empty response.
           </p>
         </div>
@@ -73,22 +73,22 @@ export default async function OpsPage() {
   const { events, activeSteps, status } = dashboardData;
 
   return (
-    <main className="min-h-screen p-6 text-[#e5e5e5]">
+    <main className="min-h-screen p-6 text-gray-900">
       <div className="mx-auto flex max-w-6xl flex-col gap-6">
-        <header className="rounded-lg border border-[#2a2a2a] bg-[#111111] p-5">
+        <header className="rounded-lg border border-black/5 bg-white/70 backdrop-blur-xl p-5">
           <h1 className="text-2xl font-semibold">Ops Kernel</h1>
-          <p className="mt-1 text-sm text-[#9ca3af]">
+          <p className="mt-1 text-sm text-gray-500">
             Recent events and currently queued/running steps.
           </p>
         </header>
 
-        <section className="rounded-lg border border-[#2a2a2a] bg-[#111111] p-5">
+        <section className="rounded-lg border border-black/5 bg-white/70 backdrop-blur-xl p-5">
           <div className="mb-3 flex items-center justify-between">
             <h2 className="text-lg font-medium">Ops Summary Events</h2>
           </div>
           <div className="grid gap-3 md:grid-cols-3">
-            <article className="rounded border border-[#1f2937] bg-[#0b0b0b] p-3">
-              <p className="text-xs uppercase tracking-wide text-[#9ca3af]">
+            <article className="rounded border border-black/5 bg-white/60 p-3">
+              <p className="text-xs uppercase tracking-wide text-gray-500">
                 Last Heartbeat
               </p>
               <p className="mt-1 text-sm">
@@ -97,8 +97,8 @@ export default async function OpsPage() {
                   : "No heartbeat event yet"}
               </p>
             </article>
-            <article className="rounded border border-[#1f2937] bg-[#0b0b0b] p-3">
-              <p className="text-xs uppercase tracking-wide text-[#9ca3af]">
+            <article className="rounded border border-black/5 bg-white/60 p-3">
+              <p className="text-xs uppercase tracking-wide text-gray-500">
                 Last Standup
               </p>
               <p className="mt-1 text-sm">
@@ -107,8 +107,8 @@ export default async function OpsPage() {
                   : "No standup event yet"}
               </p>
             </article>
-            <article className="rounded border border-[#1f2937] bg-[#0b0b0b] p-3">
-              <p className="text-xs uppercase tracking-wide text-[#9ca3af]">
+            <article className="rounded border border-black/5 bg-white/60 p-3">
+              <p className="text-xs uppercase tracking-wide text-gray-500">
                 Last Briefing
               </p>
               <p className="mt-1 text-sm">
@@ -120,14 +120,14 @@ export default async function OpsPage() {
           </div>
         </section>
 
-        <section className="rounded-lg border border-[#2a2a2a] bg-[#111111] p-5">
+        <section className="rounded-lg border border-black/5 bg-white/70 backdrop-blur-xl p-5">
           <div className="mb-3 flex items-center justify-between">
             <h2 className="text-lg font-medium">Queued / Running Steps</h2>
-            <span className="text-xs text-[#9ca3af]">{activeSteps.length} visible</span>
+            <span className="text-xs text-gray-500">{activeSteps.length} visible</span>
           </div>
           <div className="overflow-x-auto">
             <table className="min-w-full text-sm">
-              <thead className="text-left text-xs uppercase tracking-wide text-[#9ca3af]">
+              <thead className="text-left text-xs uppercase tracking-wide text-gray-500">
                 <tr>
                   <th className="pb-2 pr-4">Kind</th>
                   <th className="pb-2 pr-4">Status</th>
@@ -138,12 +138,12 @@ export default async function OpsPage() {
               </thead>
               <tbody>
                 {activeSteps.map((step) => (
-                  <tr key={step.id} className="border-t border-[#1f2937]">
+                  <tr key={step.id} className="border-t border-black/5">
                     <td className="py-2 pr-4">{step.kind}</td>
                     <td className="py-2 pr-4">{step.status}</td>
                     <td className="py-2 pr-4">{step.attempts}</td>
                     <td className="py-2 pr-4">{formatDate(step.created_at)}</td>
-                    <td className="py-2 pr-4 font-mono text-xs text-[#9ca3af]">
+                    <td className="py-2 pr-4 font-mono text-xs text-gray-500">
                       {step.mission_id}
                     </td>
                   </tr>
@@ -152,7 +152,7 @@ export default async function OpsPage() {
                   <tr>
                     <td
                       colSpan={5}
-                      className="py-4 text-center text-sm text-[#9ca3af]"
+                      className="py-4 text-center text-sm text-gray-500"
                     >
                       No queued or running steps.
                     </td>
@@ -163,14 +163,14 @@ export default async function OpsPage() {
           </div>
         </section>
 
-        <section className="rounded-lg border border-[#2a2a2a] bg-[#111111] p-5">
+        <section className="rounded-lg border border-black/5 bg-white/70 backdrop-blur-xl p-5">
           <div className="mb-3 flex items-center justify-between">
             <h2 className="text-lg font-medium">Recent Ops Events</h2>
-            <span className="text-xs text-[#9ca3af]">{events.length} visible</span>
+            <span className="text-xs text-gray-500">{events.length} visible</span>
           </div>
           <div className="overflow-x-auto">
             <table className="min-w-full text-sm">
-              <thead className="text-left text-xs uppercase tracking-wide text-[#9ca3af]">
+              <thead className="text-left text-xs uppercase tracking-wide text-gray-500">
                 <tr>
                   <th className="pb-2 pr-4">Created</th>
                   <th className="pb-2 pr-4">Kind</th>
@@ -180,18 +180,18 @@ export default async function OpsPage() {
               </thead>
               <tbody>
                 {events.map((event) => (
-                  <tr key={event.id} className="border-t border-[#1f2937]">
+                  <tr key={event.id} className="border-t border-black/5">
                     <td className="py-2 pr-4">{formatDate(event.created_at)}</td>
                     <td className="py-2 pr-4">{event.kind}</td>
                     <td className="py-2 pr-4">{event.title}</td>
-                    <td className="py-2 pr-4 text-[#9ca3af]">{event.summary}</td>
+                    <td className="py-2 pr-4 text-gray-500">{event.summary}</td>
                   </tr>
                 ))}
                 {events.length === 0 && (
                   <tr>
                     <td
                       colSpan={4}
-                      className="py-4 text-center text-sm text-[#9ca3af]"
+                      className="py-4 text-center text-sm text-gray-500"
                     >
                       No ops events found.
                     </td>

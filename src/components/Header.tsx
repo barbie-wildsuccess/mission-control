@@ -28,26 +28,26 @@ export function Header({ agentCount, activeCount }: HeaderProps) {
   }, []);
 
   return (
-    <header className="border-b border-[#1e1e1e] px-4 py-3 flex items-center justify-between relative scanline overflow-hidden">
+    <header className="border-b border-black/5 px-4 py-3 flex items-center justify-between bg-white/70 backdrop-blur-xl">
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-          <span className="font-mono text-xs text-emerald-500 tracking-widest uppercase">
-            Mission Control
+          <div className="w-2 h-2 rounded-full bg-pink-500 animate-pulse" />
+          <span className="text-sm font-semibold text-gray-900 tracking-wide">
+            🏠 The Dreamhouse
           </span>
         </div>
-        <div className="h-4 w-px bg-[#2a2a2a]" />
-        <span className="font-mono text-xs text-[#525252]">
-          {activeCount}/{agentCount} AGENTS ACTIVE
+        <div className="h-4 w-px bg-gray-200" />
+        <span className="text-xs text-gray-500">
+          {activeCount}/{agentCount} BESTIES ONLINE
         </span>
       </div>
 
       <div className="flex items-center gap-4">
-        <span className="font-mono text-xs text-[#525252]">
-          SYS: NOMINAL
+        <span className="text-xs text-gray-500">
+          VIBES: IMMACULATE ✨
         </span>
-        <div className="h-4 w-px bg-[#2a2a2a]" />
-        <span className="font-mono text-sm text-[#737373] tabular-nums">
+        <div className="h-4 w-px bg-gray-200" />
+        <span className="text-sm text-gray-400 tabular-nums">
           {time}
         </span>
       </div>

@@ -3,43 +3,35 @@
   "agents": [
     {
       "id": "agent-01",
-      "name": "Forge",
+      "name": "Ken",
       "role": "Code Builder",
-      "emoji": "🔨",
-      "color": "#f97316",
-      "description": "Writes and ships code"
+      "emoji": "💪",
+      "color": "#3B82F6",
+      "description": "Builds and ships code"
     },
     {
-      "id": "agent-02", 
-      "name": "Scout",
+      "id": "agent-02",
+      "name": "Skipper",
       "role": "Research & Discovery",
       "emoji": "🔍",
-      "color": "#3b82f6",
+      "color": "#8B5CF6",
       "description": "Finds opportunities and intel"
     },
     {
       "id": "agent-03",
-      "name": "Ghost",
+      "name": "Mrs Honey",
       "role": "Outreach & Growth",
-      "emoji": "👻",
-      "color": "#8b5cf6",
+      "emoji": "🍯",
+      "color": "#F59E0B",
       "description": "Handles outreach and marketing"
     },
     {
       "id": "agent-04",
-      "name": "Closer",
+      "name": "Theresa",
       "role": "Sales & Deals",
-      "emoji": "🤝",
-      "color": "#22c55e",
+      "emoji": "💖",
+      "color": "#EC4899",
       "description": "Closes deals and follows up"
-    },
-    {
-      "id": "agent-05",
-      "name": "Hype",
-      "role": "Social & Content",
-      "emoji": "📣",
-      "color": "#ec4899",
-      "description": "Creates content and hype"
     }
   ],
   "settings": {

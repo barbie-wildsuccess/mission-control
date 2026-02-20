@@ -3,8 +3,8 @@ import "./globals.css";
 import { ConvexClientProvider } from "./ConvexClientProvider";
 
 export const metadata: Metadata = {
-  title: "Mission Control",
-  description: "Real-time AI agent squad monitoring dashboard",
+  title: "The Dreamhouse",
+  description: "Your luxury command centre",
 };
 
 export default function RootLayout({
@@ -13,8 +13,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
-      <body className="font-sans antialiased bg-[#0a0a0a] text-white">
+    <html lang="en">
+      <body className="font-sans antialiased bg-[#FAFAFA] text-gray-900">
         <ConvexClientProvider>{children}</ConvexClientProvider>
       </body>
     </html>

@@ -25,11 +25,11 @@ interface TaskDetailModalProps {
 }
 
 const STATUS_COLORS: Record<Task["status"], { bg: string; text: string; border: string }> = {
-  inbox: { bg: "rgba(82, 82, 82, 0.15)", text: "#737373", border: "rgba(82, 82, 82, 0.3)" },
-  in_progress: { bg: "rgba(16, 185, 129, 0.15)", text: "#10b981", border: "rgba(16, 185, 129, 0.3)" },
-  review: { bg: "rgba(245, 158, 11, 0.15)", text: "#f59e0b", border: "rgba(245, 158, 11, 0.3)" },
-  done: { bg: "rgba(59, 130, 246, 0.15)", text: "#3b82f6", border: "rgba(59, 130, 246, 0.3)" },
-  blocked: { bg: "rgba(239, 68, 68, 0.15)", text: "#ef4444", border: "rgba(239, 68, 68, 0.3)" },
+  inbox: { bg: "rgba(156, 163, 175, 0.1)", text: "#6b7280", border: "rgba(156, 163, 175, 0.2)" },
+  in_progress: { bg: "rgba(236, 72, 153, 0.1)", text: "#EC4899", border: "rgba(236, 72, 153, 0.2)" },
+  review: { bg: "rgba(245, 158, 11, 0.1)", text: "#d97706", border: "rgba(245, 158, 11, 0.2)" },
+  done: { bg: "rgba(59, 130, 246, 0.1)", text: "#3b82f6", border: "rgba(59, 130, 246, 0.2)" },
+  blocked: { bg: "rgba(239, 68, 68, 0.1)", text: "#dc2626", border: "rgba(239, 68, 68, 0.2)" },
 };
 
 const STATUS_LABELS: Record<Task["status"], string> = {
@@ -58,18 +58,16 @@ function linkifyText(text: string): ReactNode[] {
   let match;
 
   while ((match = urlRegex.exec(text)) !== null) {
-    // Add text before the URL
     if (match.index > lastIndex) {
       parts.push(text.substring(lastIndex, match.index));
     }
-    // Add the URL as a link
     parts.push(
       <a
         key={match.index}
         href={match[0]}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-emerald-500 hover:text-emerald-400 underline transition-colors"
+        className="text-pink-500 hover:text-pink-400 underline transition-colors"
       >
         {match[0]}
       </a>
@@ -77,7 +75,6 @@ function linkifyText(text: string): ReactNode[] {
     lastIndex = match.index + match[0].length;
   }
 
-  // Add remaining text
   if (lastIndex < text.length) {
     parts.push(text.substring(lastIndex));
   }
@@ -90,7 +87,6 @@ export function TaskDetailModal({ task, agents, onClose }: TaskDetailModalProps)
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const agentMap = new Map(agents.map((a) => [a.name, a.emoji]));
 
-  // Close on ESC key
   useEffect(() => {
     if (!task) return;
 
@@ -104,7 +100,6 @@ export function TaskDetailModal({ task, agents, onClose }: TaskDetailModalProps)
     return () => document.removeEventListener("keydown", handleEsc);
   }, [task, onClose]);
 
-  // Focus trap
   useEffect(() => {
     if (!task || !modalRef.current) return;
 
@@ -115,7 +110,6 @@ export function TaskDetailModal({ task, agents, onClose }: TaskDetailModalProps)
     const firstElement = focusableElements[0];
     const lastElement = focusableElements[focusableElements.length - 1];
 
-    // Focus first element (close button)
     closeButtonRef.current?.focus();
 
     const handleTab = (e: KeyboardEvent) => {
@@ -138,12 +132,10 @@ export function TaskDetailModal({ task, agents, onClose }: TaskDetailModalProps)
     return () => modal.removeEventListener("keydown", handleTab);
   }, [task]);
 
-  // Copy to clipboard function
   const copyTaskJSON = async () => {
     if (!task) return;
     try {
       await navigator.clipboard.writeText(JSON.stringify(task, null, 2));
-      // Could add a toast notification here
     } catch (err) {
       console.error("Failed to copy:", err);
     }
@@ -157,7 +149,7 @@ export function TaskDetailModal({ task, agents, onClose }: TaskDetailModalProps)
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 animate-fade-in"
+        className="fixed inset-0 bg-black/30 backdrop-blur-sm z-40 animate-fade-in"
         onClick={onClose}
         aria-hidden="true"
       />
@@ -170,22 +162,20 @@ export function TaskDetailModal({ task, agents, onClose }: TaskDetailModalProps)
         aria-labelledby="task-modal-title"
         className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-full max-w-2xl max-h-[90vh] overflow-hidden animate-scale-in"
       >
-        <div className="bg-[#111111] border border-[#2a2a2a] rounded-lg shadow-2xl flex flex-col max-h-[90vh]">
+        <div className="bg-white/90 backdrop-blur-xl border border-white/50 rounded-2xl shadow-2xl flex flex-col max-h-[90vh]">
           {/* Header */}
-          <div className="flex items-start justify-between gap-4 px-6 py-4 border-b border-[#1e1e1e]">
+          <div className="flex items-start justify-between gap-4 px-6 py-4 border-b border-black/5">
             <div className="flex-1 min-w-0">
               <h2
                 id="task-modal-title"
-                className="text-lg font-medium text-[#e5e5e5] mb-3 leading-tight"
+                className="text-lg font-medium text-gray-900 mb-3 leading-tight"
               >
                 {task.title}
               </h2>
               
-              {/* Badges */}
               <div className="flex flex-wrap gap-2">
-                {/* Status badge */}
                 <div
-                  className="px-2.5 py-1 rounded font-mono text-[10px] font-bold uppercase tracking-wide"
+                  className="px-2.5 py-1 rounded-lg font-mono text-[10px] font-bold uppercase tracking-wide"
                   style={{
                     background: statusColor.bg,
                     color: statusColor.text,
@@ -195,9 +185,8 @@ export function TaskDetailModal({ task, agents, onClose }: TaskDetailModalProps)
                   {STATUS_LABELS[task.status]}
                 </div>
 
-                {/* Priority badge */}
                 <div
-                  className={`px-2.5 py-1 rounded font-mono text-[10px] font-bold ${
+                  className={`px-2.5 py-1 rounded-lg font-mono text-[10px] font-bold ${
                     task.priority === "P0"
                       ? "priority-p0"
                       : task.priority === "P1"
@@ -208,19 +197,17 @@ export function TaskDetailModal({ task, agents, onClose }: TaskDetailModalProps)
                   {task.priority}
                 </div>
 
-                {/* Assignee badge */}
-                <div className="px-2.5 py-1 rounded font-mono text-[10px] font-medium bg-[#1a1a1a] text-[#737373] border border-[#2a2a2a] flex items-center gap-1.5">
+                <div className="px-2.5 py-1 rounded-lg text-[10px] font-medium bg-gray-100 text-gray-600 border border-gray-200 flex items-center gap-1.5">
                   <span>{agentMap.get(task.assignee) || "⚡"}</span>
                   <span>{task.assignee}</span>
                 </div>
               </div>
             </div>
 
-            {/* Close button */}
             <button
               ref={closeButtonRef}
               onClick={onClose}
-              className="shrink-0 w-8 h-8 flex items-center justify-center rounded hover:bg-[#1a1a1a] text-[#737373] hover:text-[#e5e5e5] transition-colors"
+              className="shrink-0 w-8 h-8 flex items-center justify-center rounded-lg hover:bg-gray-100 text-gray-400 hover:text-gray-800 transition-colors"
               aria-label="Close modal"
             >
               <svg
@@ -242,52 +229,49 @@ export function TaskDetailModal({ task, agents, onClose }: TaskDetailModalProps)
 
           {/* Content */}
           <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4">
-            {/* Timestamps */}
             <div className="flex gap-6 text-xs">
               <div>
-                <span className="font-mono text-[#525252] uppercase tracking-wide">Created</span>
-                <p className="text-[#737373] mt-1">{formatTimestamp(task.createdAt)}</p>
+                <span className="text-gray-400 uppercase tracking-wide">Created</span>
+                <p className="text-gray-600 mt-1">{formatTimestamp(task.createdAt)}</p>
               </div>
               {task.updatedAt !== task.createdAt && (
                 <div>
-                  <span className="font-mono text-[#525252] uppercase tracking-wide">Updated</span>
-                  <p className="text-[#737373] mt-1">{formatTimestamp(task.updatedAt)}</p>
+                  <span className="text-gray-400 uppercase tracking-wide">Updated</span>
+                  <p className="text-gray-600 mt-1">{formatTimestamp(task.updatedAt)}</p>
                 </div>
               )}
               {task.status === "done" && (
                 <div>
-                  <span className="font-mono text-[#525252] uppercase tracking-wide">Completed</span>
-                  <p className="text-[#737373] mt-1">{formatTimestamp(task.updatedAt)}</p>
+                  <span className="text-gray-400 uppercase tracking-wide">Completed</span>
+                  <p className="text-gray-600 mt-1">{formatTimestamp(task.updatedAt)}</p>
                 </div>
               )}
             </div>
 
-            {/* Description */}
             <div>
-              <h3 className="font-mono text-[10px] text-[#525252] uppercase tracking-wider mb-2">
+              <h3 className="text-[10px] text-gray-400 uppercase tracking-wider mb-2">
                 Description
               </h3>
-              <div className="text-sm text-[#e5e5e5] whitespace-pre-wrap leading-relaxed">
+              <div className="text-sm text-gray-800 whitespace-pre-wrap leading-relaxed">
                 {linkifyText(task.description)}
               </div>
             </div>
 
-            {/* Task ID */}
             <div>
-              <h3 className="font-mono text-[10px] text-[#525252] uppercase tracking-wider mb-2">
+              <h3 className="text-[10px] text-gray-400 uppercase tracking-wider mb-2">
                 Task ID
               </h3>
-              <code className="text-xs text-[#737373] font-mono bg-[#0a0a0a] px-2 py-1 rounded border border-[#1e1e1e]">
+              <code className="text-xs text-gray-500 font-mono bg-gray-100 px-2 py-1 rounded-lg border border-gray-200">
                 {task._id}
               </code>
             </div>
           </div>
 
           {/* Footer */}
-          <div className="flex items-center justify-between gap-3 px-6 py-4 border-t border-[#1e1e1e] bg-[#0a0a0a]">
+          <div className="flex items-center justify-between gap-3 px-6 py-4 border-t border-black/5 bg-gray-50/50">
             <button
               onClick={copyTaskJSON}
-              className="px-3 py-2 rounded font-mono text-xs text-[#737373] hover:text-[#e5e5e5] bg-[#111111] hover:bg-[#1a1a1a] border border-[#1e1e1e] hover:border-[#2a2a2a] transition-colors flex items-center gap-2"
+              className="px-3 py-2 rounded-lg text-xs text-gray-500 hover:text-gray-800 bg-white hover:bg-gray-50 border border-gray-200 hover:border-gray-300 transition-colors flex items-center gap-2"
             >
               <svg
                 width="14"
@@ -304,7 +288,7 @@ export function TaskDetailModal({ task, agents, onClose }: TaskDetailModalProps)
 
             <button
               onClick={onClose}
-              className="px-4 py-2 rounded font-mono text-xs text-[#e5e5e5] bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 hover:border-emerald-500/40 transition-colors"
+              className="px-4 py-2 rounded-lg text-xs text-white bg-pink-500 hover:bg-pink-600 transition-colors"
             >
               Close
             </button>
@@ -312,7 +296,6 @@ export function TaskDetailModal({ task, agents, onClose }: TaskDetailModalProps)
         </div>
       </div>
 
-      {/* Animations */}
       <style jsx>{`
         @keyframes fade-in {
           from {

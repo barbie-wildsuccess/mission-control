@@ -41,16 +41,16 @@ export function ActivityFeed({
   }, [activities]);
 
   return (
-    <div className="flex-1 flex flex-col rounded-lg border border-[#1e1e1e] bg-[#111111] min-h-0">
+    <div className="flex-1 flex flex-col rounded-2xl border border-white/30 bg-white/70 backdrop-blur-xl min-h-0 shadow-sm">
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-2.5 border-b border-[#1e1e1e]">
+      <div className="flex items-center justify-between px-4 py-2.5 border-b border-black/5">
         <div className="flex items-center gap-2">
-          <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-          <span className="font-mono text-xs text-[#737373] uppercase tracking-wider">
+          <div className="w-1.5 h-1.5 rounded-full bg-pink-500 animate-pulse" />
+          <span className="text-xs text-gray-500 uppercase tracking-wider">
             Live Activity Feed
           </span>
         </div>
-        <span className="font-mono text-[10px] text-[#3a3a3a]">
+        <span className="text-[10px] text-gray-400">
           {activities.length} events
         </span>
       </div>
@@ -61,24 +61,24 @@ export function ActivityFeed({
           {activities.map((activity) => (
             <div
               key={activity._id}
-              className="group flex items-start gap-3 py-1.5 px-2 rounded hover:bg-[#1a1a1a] transition-colors"
+              className="group flex items-start gap-3 py-1.5 px-2 rounded-lg hover:bg-white/50 transition-colors"
             >
               {/* Timestamp */}
-              <span className="font-mono text-[11px] text-[#3a3a3a] shrink-0 tabular-nums pt-0.5">
+              <span className="font-mono text-[11px] text-gray-400 shrink-0 tabular-nums pt-0.5">
                 {formatTime(activity.timestamp)}
               </span>
 
               {/* Agent emoji + name */}
               <span className="text-xs shrink-0 pt-0.5">
                 <span className="mr-1">{agentMap.get(activity.agent) || "⚡"}</span>
-                <span className="font-mono text-emerald-500/70">{activity.agent}</span>
+                <span className="text-pink-500/70 font-medium">{activity.agent}</span>
               </span>
 
               {/* Action */}
               <div className="flex-1 min-w-0">
-                <span className="text-xs text-[#e5e5e5]">{activity.action}</span>
+                <span className="text-xs text-gray-800">{activity.action}</span>
                 {activity.detail && (
-                  <p className="text-[11px] text-[#525252] mt-0.5 truncate group-hover:whitespace-normal">
+                  <p className="text-[11px] text-gray-400 mt-0.5 truncate group-hover:whitespace-normal">
                     {activity.detail}
                   </p>
                 )}
@@ -87,7 +87,7 @@ export function ActivityFeed({
           ))}
 
           {activities.length === 0 && (
-            <div className="text-center py-8 text-[#3a3a3a] font-mono text-xs">
+            <div className="text-center py-8 text-gray-400 text-xs">
               Waiting for activity...
             </div>
           )}

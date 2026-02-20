@@ -22,9 +22,9 @@ export function SeedButton() {
     <button
       onClick={handleSeed}
       disabled={loading}
-      className="px-6 py-2.5 bg-emerald-500/10 border border-emerald-500/30 text-emerald-500 rounded-lg font-mono text-sm hover:bg-emerald-500/20 transition-colors disabled:opacity-50"
+      className="px-6 py-2.5 bg-pink-50 border border-pink-200 text-pink-500 rounded-xl text-sm hover:bg-pink-100 transition-colors disabled:opacity-50"
     >
-      {loading ? "DEPLOYING AGENTS..." : "DEPLOY AGENT SQUAD"}
+      {loading ? "INVITING BESTIES..." : "💖 INVITE YOUR BESTIES"}
     </button>
   );
 }

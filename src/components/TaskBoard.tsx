@@ -20,8 +20,8 @@ interface Agent {
 }
 
 const COLUMNS: { key: Task["status"]; label: string; color: string }[] = [
-  { key: "inbox", label: "INBOX", color: "#525252" },
-  { key: "in_progress", label: "IN PROGRESS", color: "#10b981" },
+  { key: "inbox", label: "INBOX", color: "#9ca3af" },
+  { key: "in_progress", label: "IN PROGRESS", color: "#EC4899" },
   { key: "review", label: "REVIEW", color: "#f59e0b" },
   { key: "done", label: "DONE", color: "#3b82f6" },
 ];
@@ -37,7 +37,7 @@ function TaskCard({
 }) {
   return (
     <div 
-      className="rounded border border-[#1e1e1e] bg-[#0a0a0a] p-2.5 hover:border-[#2a2a2a] transition-colors cursor-pointer"
+      className="rounded-xl border border-black/5 bg-white/60 p-2.5 hover:shadow-sm transition-all cursor-pointer"
       onClick={onClick}
       role="button"
       tabIndex={0}
@@ -50,7 +50,7 @@ function TaskCard({
       aria-label={`View details for ${task.title}`}
     >
       <div className="flex items-start justify-between gap-2 mb-1.5">
-        <span className="text-xs text-[#e5e5e5] font-medium leading-tight line-clamp-2">
+        <span className="text-xs text-gray-800 font-medium leading-tight line-clamp-2">
           {task.title}
         </span>
         <span
@@ -67,7 +67,7 @@ function TaskCard({
       </div>
       <div className="flex items-center gap-1.5">
         <span className="text-xs">{agentMap.get(task.assignee) || "⚡"}</span>
-        <span className="font-mono text-[10px] text-[#525252]">{task.assignee}</span>
+        <span className="text-[10px] text-gray-400">{task.assignee}</span>
       </div>
     </div>
   );
@@ -86,7 +86,6 @@ export function TaskBoard({ tasks, agents }: { tasks: Task[]; agents: Agent[] })
 
   const handleTaskClick = (task: Task) => {
     setSelectedTaskId(task._id);
-    // Update URL without reloading
     const url = new URL(window.location.href);
     url.searchParams.set("task", task._id);
     window.history.pushState({}, "", url);
@@ -94,7 +93,6 @@ export function TaskBoard({ tasks, agents }: { tasks: Task[]; agents: Agent[] })
 
   const handleCloseModal = () => {
     setSelectedTaskId(null);
-    // Remove task param from URL
     const url = new URL(window.location.href);
     url.searchParams.delete("task");
     window.history.pushState({}, "", url);
@@ -102,13 +100,13 @@ export function TaskBoard({ tasks, agents }: { tasks: Task[]; agents: Agent[] })
 
   return (
     <>
-      <div className="flex-1 flex flex-col rounded-lg border border-[#1e1e1e] bg-[#111111] min-h-0">
+      <div className="flex-1 flex flex-col rounded-2xl border border-white/30 bg-white/70 backdrop-blur-xl min-h-0 shadow-sm">
         {/* Header */}
-        <div className="flex items-center justify-between px-4 py-2.5 border-b border-[#1e1e1e]">
-          <span className="font-mono text-xs text-[#737373] uppercase tracking-wider">
+        <div className="flex items-center justify-between px-4 py-2.5 border-b border-black/5">
+          <span className="text-xs text-gray-500 uppercase tracking-wider">
             Task Board
           </span>
-          <span className="font-mono text-[10px] text-[#3a3a3a]">
+          <span className="text-[10px] text-gray-400">
             {tasks.length} tasks
           </span>
         </div>
@@ -126,10 +124,10 @@ export function TaskBoard({ tasks, agents }: { tasks: Task[]; agents: Agent[] })
                       className="w-1.5 h-1.5 rounded-full"
                       style={{ backgroundColor: col.color }}
                     />
-                    <span className="font-mono text-[9px] text-[#525252] tracking-wider">
+                    <span className="text-[9px] text-gray-400 tracking-wider uppercase">
                       {col.label}
                     </span>
-                    <span className="font-mono text-[9px] text-[#3a3a3a]">
+                    <span className="text-[9px] text-gray-300">
                       {columnTasks.length}
                     </span>
                   </div>
@@ -152,7 +150,6 @@ export function TaskBoard({ tasks, agents }: { tasks: Task[]; agents: Agent[] })
         </div>
       </div>
 
-      {/* Task Detail Modal */}
       <TaskDetailModal 
         task={selectedTask} 
         agents={agents}

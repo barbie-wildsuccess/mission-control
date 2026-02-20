@@ -20,15 +20,15 @@ interface MarkdownQueueItem {
 }
 
 const statusStyles: Record<QueueStatus, string> = {
-  queued: "text-slate-300 border-slate-400/30 bg-slate-500/10",
-  in_progress: "text-amber-300 border-amber-400/30 bg-amber-500/10",
-  shipped: "text-emerald-300 border-emerald-400/30 bg-emerald-500/10",
+  queued: "text-gray-600 border-gray-300/30 bg-gray-100/50",
+  in_progress: "text-amber-600 border-amber-300/30 bg-amber-50",
+  shipped: "text-pink-600 border-pink-300/30 bg-pink-50",
 };
 
 const priorityStyles: Record<QueuePriority, string> = {
-  P0: "text-red-300 border-red-400/30 bg-red-500/10",
-  P1: "text-amber-300 border-amber-400/30 bg-amber-500/10",
-  P2: "text-cyan-300 border-cyan-400/30 bg-cyan-500/10",
+  P0: "text-red-600 border-red-300/30 bg-red-50",
+  P1: "text-amber-600 border-amber-300/30 bg-amber-50",
+  P2: "text-blue-600 border-blue-300/30 bg-blue-50",
 };
 
 export function BuildQueue() {
@@ -104,8 +104,8 @@ export function BuildQueue() {
   if (queueData === undefined && syncState !== "error") {
     return (
       <div className="space-y-3">
-        <h2 className="font-mono text-sm text-emerald-500 tracking-widest uppercase">Build Queue</h2>
-        <div className="text-[#525252] font-mono text-xs">Loading queue data...</div>
+        <h2 className="text-sm font-semibold text-pink-500 tracking-widest uppercase">Build Queue</h2>
+        <div className="text-gray-400 text-xs">Loading queue data...</div>
       </div>
     );
   }
@@ -113,13 +113,13 @@ export function BuildQueue() {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h2 className="font-mono text-sm text-emerald-500 tracking-widest uppercase">Build Queue</h2>
+        <h2 className="text-sm font-semibold text-pink-500 tracking-widest uppercase">Build Queue</h2>
         <div className="flex items-center gap-2">
-          <span className="font-mono text-xs text-[#737373]">LAST SYNC {lastUpdatedLabel}</span>
+          <span className="text-xs text-gray-400">LAST SYNC {lastUpdatedLabel}</span>
           <button
             onClick={() => void syncQueue()}
             disabled={syncState === "syncing"}
-            className="px-3 py-1 border border-[#2a2a2a] rounded font-mono text-xs text-[#b5b5b5] hover:text-white hover:border-[#525252] disabled:opacity-60 disabled:cursor-not-allowed transition-colors"
+            className="px-3 py-1 border border-gray-200 rounded-lg text-xs text-gray-600 hover:text-gray-900 hover:border-gray-300 disabled:opacity-60 disabled:cursor-not-allowed transition-colors"
           >
             {syncState === "syncing" ? "SYNCING..." : "SYNC NOW"}
           </button>
@@ -127,29 +127,29 @@ export function BuildQueue() {
       </div>
 
       <div className="grid grid-cols-3 gap-2">
-        <div className="border border-slate-400/20 bg-slate-500/5 rounded px-3 py-2">
-          <div className="font-mono text-xs text-slate-300 uppercase">Queued</div>
-          <div className="font-mono text-xl text-white">{counts.queued}</div>
+        <div className="border border-gray-200 bg-white/60 rounded-xl px-3 py-2">
+          <div className="text-xs text-gray-500 uppercase">Queued</div>
+          <div className="text-xl text-gray-900">{counts.queued}</div>
         </div>
-        <div className="border border-amber-400/20 bg-amber-500/5 rounded px-3 py-2">
-          <div className="font-mono text-xs text-amber-300 uppercase">In Progress</div>
-          <div className="font-mono text-xl text-white">{counts.inProgress}</div>
+        <div className="border border-amber-200 bg-amber-50/60 rounded-xl px-3 py-2">
+          <div className="text-xs text-amber-600 uppercase">In Progress</div>
+          <div className="text-xl text-gray-900">{counts.inProgress}</div>
         </div>
-        <div className="border border-emerald-400/20 bg-emerald-500/5 rounded px-3 py-2">
-          <div className="font-mono text-xs text-emerald-300 uppercase">Shipped</div>
-          <div className="font-mono text-xl text-white">{counts.shipped}</div>
+        <div className="border border-pink-200 bg-pink-50/60 rounded-xl px-3 py-2">
+          <div className="text-xs text-pink-600 uppercase">Shipped</div>
+          <div className="text-xl text-gray-900">{counts.shipped}</div>
         </div>
       </div>
 
-      <div className="flex gap-1 p-1 bg-[#0c0c0c] border border-[#1e1e1e] rounded inline-flex">
+      <div className="flex gap-1 p-1 bg-gray-100/60 rounded-full inline-flex">
         {(["all", "P0", "P1", "P2"] as const).map((priority) => (
           <button
             key={priority}
             onClick={() => setSelectedPriority(priority)}
-            className={`px-3 py-1 font-mono text-xs uppercase tracking-wider rounded transition-colors ${
+            className={`px-3 py-1 text-xs uppercase tracking-wider rounded-full transition-all ${
               selectedPriority === priority
-                ? "bg-emerald-500/20 text-emerald-500 border border-emerald-500/30"
-                : "text-[#737373] hover:text-white hover:bg-[#1e1e1e]"
+                ? "bg-pink-500 text-white shadow-sm"
+                : "text-gray-500 hover:text-gray-900"
             }`}
           >
             {priority === "all" ? "ALL" : priority}
@@ -159,27 +159,27 @@ export function BuildQueue() {
 
       <div className="space-y-2 max-h-[520px] overflow-auto pr-1">
         {filteredItems.map((item) => (
-          <div key={item._id} className="border border-[#1e1e1e] rounded p-3 bg-[#0c0c0c]">
+          <div key={item._id} className="border border-black/5 rounded-xl p-3 bg-white/60">
             <div className="flex items-start gap-2 mb-2">
-              <span className={`px-2 py-0.5 rounded border font-mono text-xs uppercase ${statusStyles[item.status]}`}>
+              <span className={`px-2 py-0.5 rounded-lg border text-xs uppercase ${statusStyles[item.status]}`}>
                 {item.status.replace("_", " ")}
               </span>
-              <span className={`px-2 py-0.5 rounded border font-mono text-xs ${priorityStyles[item.priority]}`}>
+              <span className={`px-2 py-0.5 rounded-lg border text-xs ${priorityStyles[item.priority]}`}>
                 {item.priority}
               </span>
-              <div className="text-sm text-white font-medium leading-tight flex-1">{item.title}</div>
+              <div className="text-sm text-gray-900 font-medium leading-tight flex-1">{item.title}</div>
             </div>
 
-            {item.description ? <p className="text-xs text-[#8a8a8a] mb-3">{item.description}</p> : null}
+            {item.description ? <p className="text-xs text-gray-500 mb-3">{item.description}</p> : null}
 
             <div className="grid grid-cols-2 gap-2">
-              <label className="text-xs text-[#737373] font-mono">
+              <label className="text-xs text-gray-500">
                 Priority
                 <select
                   value={item.priority}
                   disabled={busyItemId === item._id}
                   onChange={(e) => void handlePriorityChange(item._id, e.target.value as QueuePriority)}
-                  className="mt-1 w-full bg-[#151515] border border-[#2a2a2a] rounded px-2 py-1 text-xs text-white focus:outline-none focus:border-emerald-500/40"
+                  className="mt-1 w-full bg-white/80 border border-gray-200 rounded-lg px-2 py-1 text-xs text-gray-900 focus:outline-none focus:border-pink-400"
                 >
                   <option value="P0">P0</option>
                   <option value="P1">P1</option>
@@ -187,13 +187,13 @@ export function BuildQueue() {
                 </select>
               </label>
 
-              <label className="text-xs text-[#737373] font-mono">
+              <label className="text-xs text-gray-500">
                 Status
                 <select
                   value={item.status}
                   disabled={busyItemId === item._id}
                   onChange={(e) => void handleStatusChange(item._id, e.target.value as QueueStatus)}
-                  className="mt-1 w-full bg-[#151515] border border-[#2a2a2a] rounded px-2 py-1 text-xs text-white focus:outline-none focus:border-emerald-500/40"
+                  className="mt-1 w-full bg-white/80 border border-gray-200 rounded-lg px-2 py-1 text-xs text-gray-900 focus:outline-none focus:border-pink-400"
                 >
                   <option value="queued">Queued</option>
                   <option value="in_progress">In Progress</option>
@@ -205,7 +205,7 @@ export function BuildQueue() {
         ))}
       </div>
 
-      <div className="text-xs font-mono text-[#525252]">
+      <div className="text-xs text-gray-400">
         {syncMessage || "Queue synced from ~/clawd/memory/build-queue.md"}
       </div>
     </div>

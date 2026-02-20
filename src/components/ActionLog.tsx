@@ -10,7 +10,7 @@ type Status = "pending" | "success" | "failure" | "partial" | "unknown";
 const categoryColors: Record<Category, string> = {
   outreach: "cyan",
   content: "purple",
-  code: "emerald",
+  code: "pink",
   research: "blue",
   other: "gray",
 };
@@ -45,7 +45,6 @@ export function ActionLog() {
   
   const isLoading = actions === undefined || stats === undefined;
 
-  // Get unique agents from actions
   const agents = Array.from(new Set(actions?.map(a => a.agent) || []));
 
   const formatTimestamp = (timestamp: number) => {
@@ -68,10 +67,10 @@ export function ActionLog() {
     return (
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="font-mono text-sm text-emerald-500 tracking-widest uppercase">
+          <h2 className="text-sm font-semibold text-pink-500 tracking-widest uppercase">
             Action Log
           </h2>
-          <div className="text-xs text-[#525252] font-mono">LOADING...</div>
+          <div className="text-xs text-gray-400">LOADING...</div>
         </div>
       </div>
     );
@@ -81,21 +80,21 @@ export function ActionLog() {
     <div className="space-y-4">
       {/* Header with stats */}
       <div className="flex items-center justify-between">
-        <h2 className="font-mono text-sm text-emerald-500 tracking-widest uppercase">
+        <h2 className="text-sm font-semibold text-pink-500 tracking-widest uppercase">
           Action Log
         </h2>
         
         <div className="flex gap-4 items-center">
           <div className="text-right">
-            <div className="text-xs text-[#525252] font-mono">SUCCESS RATE</div>
-            <div className="font-mono text-lg text-emerald-500">
+            <div className="text-xs text-gray-400">SUCCESS RATE</div>
+            <div className="text-lg text-pink-500">
               {stats?.successRate.toFixed(1)}%
             </div>
           </div>
           
           <div className="text-right">
-            <div className="text-xs text-[#525252] font-mono">TOTAL ACTIONS</div>
-            <div className="font-mono text-lg text-white">{stats?.total || 0}</div>
+            <div className="text-xs text-gray-400">TOTAL ACTIONS</div>
+            <div className="text-lg text-gray-900">{stats?.total || 0}</div>
           </div>
         </div>
       </div>
@@ -105,9 +104,9 @@ export function ActionLog() {
         <select
           value={filterAgent}
           onChange={(e) => setFilterAgent(e.target.value)}
-          className="bg-[#0c0c0c] border border-[#1e1e1e] rounded px-3 py-1 font-mono text-xs text-emerald-500"
+          className="bg-white/80 border border-gray-200 rounded-lg px-3 py-1 text-xs text-pink-500"
         >
-          <option value="all">ALL AGENTS</option>
+          <option value="all">ALL BESTIES</option>
           {agents.map(agent => (
             <option key={agent} value={agent}>{agent}</option>
           ))}
@@ -116,7 +115,7 @@ export function ActionLog() {
         <select
           value={filterCategory}
           onChange={(e) => setFilterCategory(e.target.value as Category | "all")}
-          className="bg-[#0c0c0c] border border-[#1e1e1e] rounded px-3 py-1 font-mono text-xs text-cyan-500"
+          className="bg-white/80 border border-gray-200 rounded-lg px-3 py-1 text-xs text-blue-500"
         >
           <option value="all">ALL CATEGORIES</option>
           <option value="outreach">OUTREACH</option>
@@ -129,7 +128,7 @@ export function ActionLog() {
         <select
           value={filterStatus}
           onChange={(e) => setFilterStatus(e.target.value as Status | "all")}
-          className="bg-[#0c0c0c] border border-[#1e1e1e] rounded px-3 py-1 font-mono text-xs text-purple-500"
+          className="bg-white/80 border border-gray-200 rounded-lg px-3 py-1 text-xs text-purple-500"
         >
           <option value="all">ALL STATUS</option>
           <option value="pending">PENDING</option>
@@ -142,14 +141,14 @@ export function ActionLog() {
 
       {/* Pending verification alert */}
       {pendingVerifications && pendingVerifications.length > 0 && filterStatus === "all" && (
-        <div className="bg-amber-500/10 border border-amber-500/20 rounded p-3">
+        <div className="bg-amber-50 border border-amber-200 rounded-xl p-3">
           <div className="flex items-center gap-2 mb-2">
             <div className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
-            <span className="font-mono text-xs text-amber-500 uppercase tracking-wider">
+            <span className="text-xs text-amber-600 uppercase tracking-wider">
               {pendingVerifications.length} Pending Verification
             </span>
           </div>
-          <p className="text-xs text-[#737373]">
+          <p className="text-xs text-gray-500">
             Actions waiting for outcome verification
           </p>
         </div>
@@ -158,11 +157,11 @@ export function ActionLog() {
       {/* Stats breakdown */}
       <div className="grid grid-cols-5 gap-2">
         {Object.entries(stats?.byStatus || {}).map(([status, count]) => (
-          <div key={status} className="bg-[#0c0c0c] border border-[#1e1e1e] rounded p-3">
+          <div key={status} className="bg-white/60 border border-black/5 rounded-xl p-3">
             <div className={`text-2xl font-mono text-${statusColors[status as Status]}-500 mb-1`}>
               {count}
             </div>
-            <div className="text-xs text-[#525252] font-mono uppercase">
+            <div className="text-xs text-gray-400 uppercase">
               {status}
             </div>
           </div>
@@ -170,48 +169,48 @@ export function ActionLog() {
       </div>
 
       {/* Action feed */}
-      <div className="bg-[#0c0c0c] border border-[#1e1e1e] rounded max-h-[600px] overflow-y-auto">
-        <div className="divide-y divide-[#1e1e1e]">
+      <div className="glass-card max-h-[600px] overflow-y-auto">
+        <div className="divide-y divide-black/5">
           {actions?.map(action => (
-            <div key={action._id} className="p-4 hover:bg-[#1e1e1e] transition-colors">
+            <div key={action._id} className="p-4 hover:bg-white/40 transition-colors">
               <div className="flex items-start justify-between mb-2">
                 <div className="flex items-center gap-2">
-                  <span className="font-mono text-sm text-emerald-500">{action.agent}</span>
-                  <span className={`text-xs font-mono px-2 py-0.5 rounded bg-${categoryColors[action.category]}-500/20 text-${categoryColors[action.category]}-500`}>
+                  <span className="text-sm text-pink-500 font-medium">{action.agent}</span>
+                  <span className={`text-xs px-2 py-0.5 rounded-lg bg-${categoryColors[action.category]}-50 text-${categoryColors[action.category]}-600`}>
                     {action.category}
                   </span>
-                  <span className={`text-xs font-mono px-2 py-0.5 rounded bg-${statusColors[action.status]}-500/20 text-${statusColors[action.status]}-500`}>
+                  <span className={`text-xs px-2 py-0.5 rounded-lg bg-${statusColors[action.status]}-50 text-${statusColors[action.status]}-600`}>
                     {action.status}
                   </span>
                 </div>
-                <div className="text-xs text-[#525252] font-mono">
+                <div className="text-xs text-gray-400">
                   {formatTimestamp(action.createdAt)}
                 </div>
               </div>
               
-              <div className="text-sm text-white mb-2">{action.action}</div>
+              <div className="text-sm text-gray-800 mb-2">{action.action}</div>
               
               {action.prediction && (
-                <div className="text-xs text-[#737373] mb-2">
+                <div className="text-xs text-gray-500 mb-2">
                   🎯 <span className="italic">Predicted: {action.prediction}</span>
                 </div>
               )}
               
               {action.outcome && (
-                <div className="text-xs text-cyan-500 mb-2">
+                <div className="text-xs text-blue-500 mb-2">
                   ✓ {action.outcome}
                 </div>
               )}
               
               {action.lessonsLearned && (
-                <div className="bg-purple-500/10 border border-purple-500/20 rounded p-2 mt-2">
-                  <div className="text-xs text-purple-500 font-mono mb-1">📚 LESSON LEARNED</div>
-                  <div className="text-xs text-[#737373]">{action.lessonsLearned}</div>
+                <div className="bg-purple-50 border border-purple-200 rounded-xl p-2 mt-2">
+                  <div className="text-xs text-purple-600 mb-1">📚 LESSON LEARNED</div>
+                  <div className="text-xs text-gray-500">{action.lessonsLearned}</div>
                 </div>
               )}
               
               {action.status === "pending" && (
-                <div className="mt-2 pt-2 border-t border-[#1e1e1e]">
+                <div className="mt-2 pt-2 border-t border-black/5">
                   <div className="flex gap-2">
                     <button
                       onClick={() => updateOutcome({
@@ -219,7 +218,7 @@ export function ActionLog() {
                         status: "success",
                         outcome: "Verified successful"
                       })}
-                      className="px-2 py-1 bg-green-500/20 border border-green-500/30 rounded text-xs font-mono text-green-500 hover:bg-green-500/30 transition-colors"
+                      className="px-2 py-1 bg-green-50 border border-green-200 rounded-lg text-xs text-green-600 hover:bg-green-100 transition-colors"
                     >
                       ✓ SUCCESS
                     </button>
@@ -229,7 +228,7 @@ export function ActionLog() {
                         status: "failure",
                         outcome: "Verified failed"
                       })}
-                      className="px-2 py-1 bg-red-500/20 border border-red-500/30 rounded text-xs font-mono text-red-500 hover:bg-red-500/30 transition-colors"
+                      className="px-2 py-1 bg-red-50 border border-red-200 rounded-lg text-xs text-red-600 hover:bg-red-100 transition-colors"
                     >
                       ✗ FAILED
                     </button>
@@ -239,7 +238,7 @@ export function ActionLog() {
                         status: "partial",
                         outcome: "Partially successful"
                       })}
-                      className="px-2 py-1 bg-orange-500/20 border border-orange-500/30 rounded text-xs font-mono text-orange-500 hover:bg-orange-500/30 transition-colors"
+                      className="px-2 py-1 bg-orange-50 border border-orange-200 rounded-lg text-xs text-orange-600 hover:bg-orange-100 transition-colors"
                     >
                       ~ PARTIAL
                     </button>

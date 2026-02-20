@@ -12,16 +12,15 @@ interface AgentFormData {
 }
 
 const DEFAULT_AGENTS: AgentFormData[] = [
-  { name: "Jarvis", role: "Squad Lead", emoji: "🎯", color: "#10b981" },
-  { name: "Closer", role: "Outreach Specialist", emoji: "💰", color: "#f59e0b" },
-  { name: "Ghost", role: "Content & SEO Writer", emoji: "✍️", color: "#8b5cf6" },
-  { name: "Hype", role: "Social Media Manager", emoji: "📱", color: "#ec4899" },
-  { name: "Forge", role: "Builder", emoji: "🔧", color: "#3b82f6" },
+  { name: "Ken", role: "Code Builder", emoji: "💪", color: "#3B82F6" },
+  { name: "Skipper", role: "Research & Discovery", emoji: "🔍", color: "#8B5CF6" },
+  { name: "Mrs Honey", role: "Outreach & Growth", emoji: "🍯", color: "#F59E0B" },
+  { name: "Theresa", role: "Sales & Deals", emoji: "💖", color: "#EC4899" },
 ];
 
-const EMOJI_OPTIONS = ["🎯", "💰", "✍️", "📱", "🔧", "🔍", "⚡", "🚀", "🎨", "🧠", "💡", "🔥", "⭐", "🎪", "🎭"];
+const EMOJI_OPTIONS = ["💪", "🔍", "🍯", "💖", "🔧", "⚡", "🚀", "🎨", "🧠", "💡", "🔥", "⭐", "🎀", "✨", "💎"];
 const COLOR_OPTIONS = [
-  "#10b981", "#f59e0b", "#8b5cf6", "#ec4899", "#3b82f6",
+  "#EC4899", "#B76E79", "#8b5cf6", "#3B82F6", "#F59E0B",
   "#14b8a6", "#f97316", "#06b6d4", "#a855f7", "#f43f5e"
 ];
 
@@ -38,14 +37,13 @@ export function Onboarding() {
   };
 
   const handleDeploy = async () => {
-    // Validation
     const names = agents.map(a => a.name.trim());
     if (names.some(n => !n)) {
-      setError("All agents must have a name");
+      setError("All besties must have a name");
       return;
     }
     if (new Set(names).size !== names.length) {
-      setError("Agent names must be unique");
+      setError("Bestie names must be unique");
       return;
     }
 
@@ -53,7 +51,6 @@ export function Onboarding() {
     setError(null);
 
     try {
-      // Create all agents
       for (const agent of agents) {
         const result = await createAgent({
           name: agent.name.trim(),
@@ -65,15 +62,12 @@ export function Onboarding() {
         });
 
         if (!result.ok) {
-          throw new Error(result.error || "Failed to create agent");
+          throw new Error(result.error || "Failed to create bestie");
         }
       }
-
-      // Success - page will automatically refresh when agents exist
-      // No need to do anything else, the query will update
     } catch (e) {
       console.error("Deploy failed:", e);
-      setError(e instanceof Error ? e.message : "Failed to deploy agents");
+      setError(e instanceof Error ? e.message : "Failed to invite besties");
       setDeploying(false);
     }
   };
@@ -83,11 +77,11 @@ export function Onboarding() {
       <div className="w-full max-w-4xl">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-mono font-bold text-emerald-500 mb-2">
-            🎯 Name Your Agent Squad
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">
+            🏠 Invite Your Besties
           </h1>
-          <p className="text-[#737373] font-mono text-sm">
-            Customize your 5 agents before deployment
+          <p className="text-gray-500 text-sm">
+            Customize your besties before they move in
           </p>
         </div>
 
@@ -96,39 +90,37 @@ export function Onboarding() {
           {agents.map((agent, index) => (
             <div
               key={index}
-              className="bg-[#0c0c0c] border border-[#1e1e1e] rounded-lg p-6"
+              className="glass-card p-6"
             >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {/* Name & Role */}
                 <div>
-                  <label className="block text-xs font-mono text-[#737373] mb-1.5 uppercase tracking-wider">
-                    Agent Name
+                  <label className="block text-xs text-gray-500 mb-1.5 uppercase tracking-wider">
+                    Bestie Name
                   </label>
                   <input
                     type="text"
                     value={agent.name}
                     onChange={(e) => updateAgent(index, "name", e.target.value)}
-                    className="w-full bg-[#1e1e1e] border border-[#2e2e2e] rounded px-3 py-2 text-white font-mono focus:outline-none focus:border-emerald-500/50"
+                    className="w-full bg-white/80 border border-gray-200 rounded-xl px-3 py-2 text-gray-900 focus:outline-none focus:border-pink-400 focus:ring-1 focus:ring-pink-400"
                     placeholder="Enter name"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-mono text-[#737373] mb-1.5 uppercase tracking-wider">
+                  <label className="block text-xs text-gray-500 mb-1.5 uppercase tracking-wider">
                     Role
                   </label>
                   <input
                     type="text"
                     value={agent.role}
                     onChange={(e) => updateAgent(index, "role", e.target.value)}
-                    className="w-full bg-[#1e1e1e] border border-[#2e2e2e] rounded px-3 py-2 text-white font-mono focus:outline-none focus:border-emerald-500/50"
+                    className="w-full bg-white/80 border border-gray-200 rounded-xl px-3 py-2 text-gray-900 focus:outline-none focus:border-pink-400 focus:ring-1 focus:ring-pink-400"
                     placeholder="Enter role"
                   />
                 </div>
 
-                {/* Emoji & Color */}
                 <div>
-                  <label className="block text-xs font-mono text-[#737373] mb-1.5 uppercase tracking-wider">
+                  <label className="block text-xs text-gray-500 mb-1.5 uppercase tracking-wider">
                     Emoji
                   </label>
                   <div className="flex gap-1.5 flex-wrap">
@@ -136,10 +128,10 @@ export function Onboarding() {
                       <button
                         key={emoji}
                         onClick={() => updateAgent(index, "emoji", emoji)}
-                        className={`w-10 h-10 rounded flex items-center justify-center text-xl transition-colors ${
+                        className={`w-10 h-10 rounded-xl flex items-center justify-center text-xl transition-all ${
                           agent.emoji === emoji
-                            ? "bg-emerald-500/20 border-2 border-emerald-500"
-                            : "bg-[#1e1e1e] border border-[#2e2e2e] hover:border-[#3e3e3e]"
+                            ? "bg-pink-100 border-2 border-pink-500 shadow-sm"
+                            : "bg-white/80 border border-gray-200 hover:border-gray-300"
                         }`}
                       >
                         {emoji}
@@ -149,7 +141,7 @@ export function Onboarding() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-mono text-[#737373] mb-1.5 uppercase tracking-wider">
+                  <label className="block text-xs text-gray-500 mb-1.5 uppercase tracking-wider">
                     Color
                   </label>
                   <div className="flex gap-1.5 flex-wrap">
@@ -157,9 +149,9 @@ export function Onboarding() {
                       <button
                         key={color}
                         onClick={() => updateAgent(index, "color", color)}
-                        className={`w-10 h-10 rounded transition-all ${
+                        className={`w-10 h-10 rounded-xl transition-all ${
                           agent.color === color
-                            ? "ring-2 ring-white ring-offset-2 ring-offset-[#0c0c0c] scale-110"
+                            ? "ring-2 ring-pink-500 ring-offset-2 ring-offset-white scale-110"
                             : "hover:scale-105"
                         }`}
                         style={{ backgroundColor: color }}
@@ -170,19 +162,19 @@ export function Onboarding() {
               </div>
 
               {/* Preview */}
-              <div className="mt-4 pt-4 border-t border-[#1e1e1e]">
+              <div className="mt-4 pt-4 border-t border-black/5">
                 <div className="flex items-center gap-3">
                   <div
-                    className="w-12 h-12 rounded-lg flex items-center justify-center text-2xl"
+                    className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl"
                     style={{ backgroundColor: `${agent.color}20`, border: `1px solid ${agent.color}40` }}
                   >
                     {agent.emoji}
                   </div>
                   <div>
-                    <div className="font-mono font-semibold text-white">
-                      {agent.name || "Unnamed Agent"}
+                    <div className="font-semibold text-gray-900">
+                      {agent.name || "Unnamed Bestie"}
                     </div>
-                    <div className="text-xs font-mono text-[#737373]">
+                    <div className="text-xs text-gray-500">
                       {agent.role || "No role assigned"}
                     </div>
                   </div>
@@ -194,8 +186,8 @@ export function Onboarding() {
 
         {/* Error Message */}
         {error && (
-          <div className="mb-4 p-4 bg-red-500/10 border border-red-500/30 rounded-lg">
-            <p className="text-red-500 font-mono text-sm">{error}</p>
+          <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-xl">
+            <p className="text-red-600 text-sm">{error}</p>
           </div>
         )}
 
@@ -204,14 +196,14 @@ export function Onboarding() {
           <button
             onClick={handleDeploy}
             disabled={deploying}
-            className="px-12 py-4 bg-emerald-500 hover:bg-emerald-600 disabled:bg-emerald-500/50 text-black font-mono font-bold text-lg rounded-lg transition-colors uppercase tracking-wider shadow-lg shadow-emerald-500/20"
+            className="px-12 py-4 bg-gradient-to-r from-pink-500 to-rose-400 hover:from-pink-600 hover:to-rose-500 disabled:opacity-50 text-white font-bold text-lg rounded-2xl transition-all uppercase tracking-wider shadow-lg shadow-pink-500/20"
           >
-            {deploying ? "DEPLOYING SQUAD..." : "🚀 DEPLOY SQUAD"}
+            {deploying ? "INVITING BESTIES..." : "💖 INVITE YOUR BESTIES"}
           </button>
         </div>
 
         {/* Footer hint */}
-        <p className="text-center text-xs text-[#525252] font-mono mt-6">
+        <p className="text-center text-xs text-gray-400 mt-6">
           You can edit these later in Settings
         </p>
       </div>
