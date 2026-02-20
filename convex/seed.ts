@@ -1,5 +1,32 @@
 import { mutation } from "./_generated/server";
 
+export const reseed = mutation({
+  args: {},
+  handler: async (ctx) => {
+    // Delete all existing agents
+    const existingAgents = await ctx.db.query("agents").collect();
+    for (const agent of existingAgents) {
+      await ctx.db.delete(agent._id);
+    }
+
+    const now = Date.now();
+
+    // Insert new besties
+    const agents = [
+      { name: "Ken", role: "Code Builder", emoji: "💪", color: "#3B82F6", status: "active" as const, currentTask: "Ready to build", lastSeen: now },
+      { name: "Skipper", role: "Research & Discovery", emoji: "🔍", color: "#8B5CF6", status: "idle" as const, currentTask: "Scouting opportunities", lastSeen: now - 300000 },
+      { name: "Mrs Honey", role: "Outreach & Growth", emoji: "🍯", color: "#F59E0B", status: "idle" as const, currentTask: "Nurturing connections", lastSeen: now - 600000 },
+      { name: "Theresa", role: "Sales & Deals", emoji: "💖", color: "#EC4899", status: "idle" as const, currentTask: "Ready to close", lastSeen: now - 120000 },
+    ];
+
+    for (const agent of agents) {
+      await ctx.db.insert("agents", agent);
+    }
+
+    return "Reseeded with besties!";
+  },
+});
+
 export const seed = mutation({
   args: {},
   handler: async (ctx) => {
@@ -11,14 +38,12 @@ export const seed = mutation({
 
     const now = Date.now();
 
-    // Seed agents
+    // Seed agents — the besties
     const agents = [
-      { name: "Jarvis", role: "Squad Lead", emoji: "🎯", color: "#10b981", status: "active" as const, currentTask: "Coordinating agent squad operations", lastSeen: now },
-      { name: "Closer", role: "Outreach Specialist", emoji: "💰", color: "#f59e0b", status: "idle" as const, currentTask: "Waiting for leads", lastSeen: now - 300000 },
-      { name: "Ghost", role: "Content & SEO Writer", emoji: "✍️", color: "#8b5cf6", status: "idle" as const, currentTask: "Queue empty", lastSeen: now - 600000 },
-      { name: "Hype", role: "Social Media Manager", emoji: "📱", color: "#ec4899", status: "idle" as const, currentTask: "No scheduled posts", lastSeen: now - 120000 },
-      { name: "Forge", role: "Builder", emoji: "🔧", color: "#3b82f6", status: "sleeping" as const, currentTask: "Sleeping — wakes at 2am", lastSeen: now - 3600000 },
-      { name: "Scout", role: "Researcher", emoji: "🔍", color: "#14b8a6", status: "idle" as const, currentTask: "No active research tasks", lastSeen: now - 900000 },
+      { name: "Ken", role: "Code Builder", emoji: "💪", color: "#3B82F6", status: "active" as const, currentTask: "Ready to build", lastSeen: now },
+      { name: "Skipper", role: "Research & Discovery", emoji: "🔍", color: "#8B5CF6", status: "idle" as const, currentTask: "Scouting opportunities", lastSeen: now - 300000 },
+      { name: "Mrs Honey", role: "Outreach & Growth", emoji: "🍯", color: "#F59E0B", status: "idle" as const, currentTask: "Nurturing connections", lastSeen: now - 600000 },
+      { name: "Theresa", role: "Sales & Deals", emoji: "💖", color: "#EC4899", status: "idle" as const, currentTask: "Ready to close", lastSeen: now - 120000 },
     ];
 
     for (const agent of agents) {
@@ -27,12 +52,10 @@ export const seed = mutation({
 
     // Seed tasks
     const tasks = [
-      { title: "Build Mission Control Dashboard", description: "Create the real-time monitoring dashboard for the agent squad", status: "in_progress" as const, assignee: "Forge", priority: "P0" as const, createdAt: now, updatedAt: now },
-      { title: "Set up email outreach pipeline", description: "Configure cold email infrastructure with warmup", status: "inbox" as const, assignee: "Closer", priority: "P1" as const, createdAt: now, updatedAt: now },
-      { title: "Write 5 SEO blog posts", description: "Target high-value keywords for your business", status: "inbox" as const, assignee: "Ghost", priority: "P1" as const, createdAt: now, updatedAt: now },
-      { title: "Launch Twitter content strategy", description: "Plan and schedule first week of tweets", status: "inbox" as const, assignee: "Hype", priority: "P1" as const, createdAt: now, updatedAt: now },
-      { title: "Research competitor pricing", description: "Analyze top 10 competitors for positioning", status: "inbox" as const, assignee: "Scout", priority: "P2" as const, createdAt: now, updatedAt: now },
-      { title: "Set up monitoring & alerts", description: "Configure uptime monitoring for all properties", status: "inbox" as const, assignee: "Jarvis", priority: "P0" as const, createdAt: now, updatedAt: now },
+      { title: "Build Mission Control Dashboard", description: "Create the real-time monitoring dashboard", status: "in_progress" as const, assignee: "Ken", priority: "P0" as const, createdAt: now, updatedAt: now },
+      { title: "Research competitor landscape", description: "Analyze top 10 competitors for positioning", status: "inbox" as const, assignee: "Skipper", priority: "P1" as const, createdAt: now, updatedAt: now },
+      { title: "Set up outreach pipeline", description: "Configure email and social outreach infrastructure", status: "inbox" as const, assignee: "Mrs Honey", priority: "P1" as const, createdAt: now, updatedAt: now },
+      { title: "Close first deals", description: "Convert warm leads into paying customers", status: "inbox" as const, assignee: "Theresa", priority: "P0" as const, createdAt: now, updatedAt: now },
     ];
 
     for (const task of tasks) {
@@ -45,7 +68,7 @@ export const seed = mutation({
       { key: "tweets_posted", value: 0, updatedAt: now },
       { key: "products_shipped", value: 0, updatedAt: now },
       { key: "revenue", value: 0, updatedAt: now },
-      { key: "active_tasks", value: 6, updatedAt: now },
+      { key: "active_tasks", value: 4, updatedAt: now },
     ];
 
     for (const metric of metrics) {
@@ -54,11 +77,10 @@ export const seed = mutation({
 
     // Seed initial activities
     const activities = [
-      { agent: "Jarvis", action: "Mission Control initialized", detail: "All systems online. Agent squad activated.", timestamp: now - 60000 },
-      { agent: "Jarvis", action: "Squad briefing complete", detail: "6 agents deployed, 6 tasks assigned", timestamp: now - 30000 },
-      { agent: "Forge", action: "Build task accepted", detail: "Starting Mission Control dashboard build", timestamp: now - 15000 },
-      { agent: "Scout", action: "Research queue loaded", detail: "5 competitor targets identified", timestamp: now - 10000 },
-      { agent: "Jarvis", action: "Systems nominal", detail: "All agents reporting. Monitoring active.", timestamp: now },
+      { agent: "Ken", action: "Dashboard build started", detail: "Setting up The Dreamhouse mission control", timestamp: now - 60000 },
+      { agent: "Skipper", action: "Research queue loaded", detail: "5 competitor targets identified", timestamp: now - 30000 },
+      { agent: "Mrs Honey", action: "Outreach pipeline ready", detail: "Email warmup initiated", timestamp: now - 15000 },
+      { agent: "Theresa", action: "Sales deck prepared", detail: "Ready to close deals", timestamp: now - 10000 },
     ];
 
     for (const activity of activities) {

@@ -69,16 +69,25 @@ export function Sidebar({ activeRoom, onRoomChange, agentCount, activeCount }: S
       >
         {/* Branding */}
         <div className="px-5 pt-5 pb-3">
-          <div className="flex items-center gap-2.5">
-            <span className="text-2xl sparkle-text">🏠</span>
-            <div>
-              <h1 className="text-base font-bold text-gray-900 tracking-wide sparkle-text">
-                The Dreamhouse
-              </h1>
-              <p className="text-[10px] text-pink-400 uppercase tracking-widest">
-                {activeCount}/{agentCount} besties online ✨
-              </p>
-            </div>
+          <div className="flex flex-col items-start">
+            <h1
+              className="sparkle-text"
+              style={{
+                fontFamily: "'Pacifico', cursive",
+                fontSize: "1.75rem",
+                background: "linear-gradient(135deg, #EC4899, #F472B6, #EC4899)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                filter: "drop-shadow(0 2px 8px rgba(236, 72, 153, 0.3))",
+                lineHeight: 1.2,
+                letterSpacing: "-0.02em",
+              }}
+            >
+              The Dreamhouse
+            </h1>
+            <p className="text-[10px] text-pink-400 uppercase tracking-widest mt-0.5">
+              {activeCount}/{agentCount} besties online ✨
+            </p>
           </div>
         </div>
 
