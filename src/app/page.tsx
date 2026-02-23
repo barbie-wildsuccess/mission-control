@@ -13,6 +13,7 @@ import { BuildQueue } from "@/components/BuildQueue";
 import { TaskCreator } from "@/components/TaskCreator";
 import { LeadTracker } from "@/components/LeadTracker";
 import { ActionLog } from "@/components/ActionLog";
+import { Chat } from "@/components/Chat";
 import { Sidebar, RoomType } from "@/components/Sidebar";
 import { useState, useMemo, useEffect } from "react";
 
@@ -134,6 +135,9 @@ export default function Dashboard() {
             <MetricsBar metrics={metrics} tasks={tasks} />
           </div>
         );
+
+      case "girl-talk":
+        return <Chat />;
 
       case "living-room":
         return (

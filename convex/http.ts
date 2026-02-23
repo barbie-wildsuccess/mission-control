@@ -286,4 +286,68 @@ http.route({
 });
 http.route({ path: "/api/actions/update", method: "OPTIONS", handler: optionsHandler });
 
+// GET /api/chat/pending — returns unprocessed user messages
+http.route({
+  path: "/api/chat/pending",
+  method: "GET",
+  handler: httpAction(async (ctx) => {
+    const messages = await ctx.runQuery(api.chat.getPending);
+    return new Response(
+      JSON.stringify(messages),
+      { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+    );
+  }),
+});
+http.route({ path: "/api/chat/pending", method: "OPTIONS", handler: optionsHandler });
+
+// POST /api/chat/respond — bridge posts Barbie's response
+http.route({
+  path: "/api/chat/respond",
+  method: "POST",
+  handler: httpAction(async (ctx, request) => {
+    const body = await request.json();
+    const { text } = body;
+
+    if (!text) {
+      return new Response(
+        JSON.stringify({ error: "text is required" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    await ctx.runMutation(api.chat.addResponse, { text });
+
+    return new Response(
+      JSON.stringify({ ok: true }),
+      { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+    );
+  }),
+});
+http.route({ path: "/api/chat/respond", method: "OPTIONS", handler: optionsHandler });
+
+// POST /api/chat/mark-processed — bridge marks messages as processed
+http.route({
+  path: "/api/chat/mark-processed",
+  method: "POST",
+  handler: httpAction(async (ctx, request) => {
+    const body = await request.json();
+    const { id } = body;
+
+    if (!id) {
+      return new Response(
+        JSON.stringify({ error: "id is required" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    await ctx.runMutation(api.chat.markProcessed, { id });
+
+    return new Response(
+      JSON.stringify({ ok: true }),
+      { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+    );
+  }),
+});
+http.route({ path: "/api/chat/mark-processed", method: "OPTIONS", handler: optionsHandler });
+
 export default http;

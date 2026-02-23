@@ -11,6 +11,7 @@ export default defineSchema({
     currentTask: v.string(),
     lastSeen: v.number(),
     lastHeartbeat: v.optional(v.number()),
+    sortOrder: v.optional(v.number()),
   }).index("by_name", ["name"]),
 
   tasks: defineTable({
@@ -100,6 +101,13 @@ export default defineSchema({
     createdAt: v.number(),
     updatedAt: v.number(),
   }).index("by_status", ["status"]).index("by_assignee", ["assignee"]),
+
+  chatMessages: defineTable({
+    sender: v.union(v.literal("user"), v.literal("barbie")),
+    text: v.string(),
+    timestamp: v.number(),
+    processed: v.optional(v.boolean()),
+  }).index("by_timestamp", ["timestamp"]).index("by_processed", ["processed"]),
 
   actionLogs: defineTable({
     agent: v.string(),

@@ -4,7 +4,8 @@ import { v } from "convex/values";
 export const list = query({
   args: {},
   handler: async (ctx) => {
-    return await ctx.db.query("agents").collect();
+    const agents = await ctx.db.query("agents").collect();
+    return agents.sort((a, b) => (a.sortOrder ?? 999) - (b.sortOrder ?? 999));
   },
 });
 

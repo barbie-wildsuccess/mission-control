@@ -12,6 +12,7 @@ import type * as actionLogs from "../actionLogs.js";
 import type * as activities from "../activities.js";
 import type * as agents from "../agents.js";
 import type * as buildQueue from "../buildQueue.js";
+import type * as chat from "../chat.js";
 import type * as http from "../http.js";
 import type * as leads from "../leads.js";
 import type * as metrics from "../metrics.js";
@@ -31,6 +32,7 @@ declare const fullApi: ApiFromModules<{
   activities: typeof activities;
   agents: typeof agents;
   buildQueue: typeof buildQueue;
+  chat: typeof chat;
   http: typeof http;
   leads: typeof leads;
   metrics: typeof metrics;

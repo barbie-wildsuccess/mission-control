@@ -4,6 +4,7 @@ import { useState } from "react";
 
 export type RoomType =
   | "foyer"
+  | "girl-talk"
   | "living-room"
   | "closet"
   | "kitchen"
@@ -23,6 +24,7 @@ interface Room {
 
 export const ROOMS: Room[] = [
   { id: "foyer", emoji: "🪞", name: "The Foyer", subtitle: "Dashboard" },
+  { id: "girl-talk", emoji: "💬", name: "Girl Talk", subtitle: "Chat with Barbie" },
   { id: "living-room", emoji: "🛋️", name: "The Living Room", subtitle: "Active Projects" },
   { id: "closet", emoji: "👗", name: "The Closet", subtitle: "Resources & Assets" },
   { id: "kitchen", emoji: "🍳", name: "The Kitchen", subtitle: "Content & Creation" },
